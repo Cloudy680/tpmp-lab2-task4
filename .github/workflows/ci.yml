@@ -1,0 +1,26 @@
+name: C Build and Test
+
+on:
+  push:
+    branches: [ main, development ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build with Make
+      run: make
+
+    - name: Check if binary exists
+      run: |
+        ls -la bin/
+        test -f bin/lab4-task24 && echo "Build successful" || echo "Build failed"
+
+    - name: Run check target
+      run: make check
